@@ -19,8 +19,7 @@ var (
 	mode       = app.Command("mode", "Calculate the mode of the input")
 	p75        = app.Command("p75", "Return the p75 of the input")
 	perc       = app.Command("perc", "Return the relative standing in the input")
-	percentile = perc.Arg("percentile",
-		"The percentile to return the relative standing of").Required().Float64()
+	percentile = perc.Arg("percentile", "The percentile to return the relative standing of").Required().Float64()
 )
 
 func main() {
