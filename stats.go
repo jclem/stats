@@ -57,8 +57,8 @@ func commandMode() {
 		panic(err)
 	}
 
-	for _, int := range mode {
-		fmt.Println(int)
+	for _, value := range mode {
+		fmt.Println(value)
 	}
 }
 
