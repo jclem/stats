@@ -11,20 +11,13 @@ import (
 )
 
 var (
-	app = kingpin.New("stats", "A CLI for common stats functions")
-
-	max = app.Command("max", "Calculate the max of the input")
-
-	mean = app.Command("mean", "Calculate the mean of the input")
-
-	median = app.Command("median", "Calculate the median of the input")
-
-	min = app.Command("min", "Calculate the min of the input")
-
-	mode = app.Command("mode", "Calculate the mode of the input")
-
-	p75 = app.Command("p75", "Return the p75 of the input")
-
+	app        = kingpin.New("stats", "A CLI for common stats functions")
+	max        = app.Command("max", "Calculate the max of the input")
+	mean       = app.Command("mean", "Calculate the mean of the input")
+	median     = app.Command("median", "Calculate the median of the input")
+	min        = app.Command("min", "Calculate the min of the input")
+	mode       = app.Command("mode", "Calculate the mode of the input")
+	p75        = app.Command("p75", "Return the p75 of the input")
 	perc       = app.Command("perc", "Return the relative standing in the input")
 	percentile = perc.Arg("percentile",
 		"The percentile to return the relative standing of").Required().Float64()
