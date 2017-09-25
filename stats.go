@@ -11,10 +11,23 @@ import (
 )
 
 var (
-	app        = kingpin.New("stats", "A CLI for common stats functions")
-	p75        = app.Command("p75", "Return the p75 of the input")
+	app = kingpin.New("stats", "A CLI for common stats functions")
+
+	max = app.Command("max", "Calculate the max of the input")
+
+	mean = app.Command("mean", "Calculate the mean of the input")
+
+	median = app.Command("median", "Calculate the median of the input")
+
+	min = app.Command("min", "Calculate the min of the input")
+
+	mode = app.Command("mode", "Calculate the mode of the input")
+
+	p75 = app.Command("p75", "Return the p75 of the input")
+
 	perc       = app.Command("perc", "Return the relative standing in the input")
-	percentile = perc.Arg("percentile", "The percentile to return the relative standing of").Required().Float64()
+	percentile = perc.Arg("percentile",
+		"The percentile to return the relative standing of").Required().Float64()
 )
 
 func main() {
@@ -23,10 +36,92 @@ func main() {
 	app.VersionFlag.Short('v')
 
 	switch kingpin.MustParse(app.Parse(os.Args[1:])) {
+	case max.FullCommand():
+		commandMax()
+	case mean.FullCommand():
+		commandMean()
+	case median.FullCommand():
+		commandMedian()
+	case min.FullCommand():
+		commandMin()
+	case mode.FullCommand():
+		commandMode()
 	case p75.FullCommand():
 		commandP75()
 	case perc.FullCommand():
 		commandPerc(*percentile)
+	}
+}
+
+func commandMax() {
+	floats, err := readNumbers()
+	if err != nil {
+		panic(err)
+	}
+
+	max, err := stats.Max(floats)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(max)
+}
+
+func commandMean() {
+	floats, err := readNumbers()
+	if err != nil {
+		panic(err)
+	}
+
+	mean, err := stats.Mean(floats)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(mean)
+}
+
+func commandMedian() {
+	floats, err := readNumbers()
+	if err != nil {
+		panic(err)
+	}
+
+	mean, err := stats.Median(floats)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(mean)
+}
+
+func commandMin() {
+	floats, err := readNumbers()
+	if err != nil {
+		panic(err)
+	}
+
+	min, err := stats.Min(floats)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(min)
+}
+
+func commandMode() {
+	floats, err := readNumbers()
+	if err != nil {
+		panic(err)
+	}
+
+	mode, err := stats.Mode(floats)
+	if err != nil {
+		panic(err)
+	}
+
+	for _, int := range mode {
+		fmt.Println(int)
 	}
 }
 
