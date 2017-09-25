@@ -37,76 +37,20 @@ func main() {
 
 	switch kingpin.MustParse(app.Parse(os.Args[1:])) {
 	case max.FullCommand():
-		commandMax()
+		simpleStatCommand(stats.Max)
 	case mean.FullCommand():
-		commandMean()
+		simpleStatCommand(stats.Mean)
 	case median.FullCommand():
-		commandMedian()
+		simpleStatCommand(stats.Median)
 	case min.FullCommand():
-		commandMin()
+		simpleStatCommand(stats.Min)
 	case mode.FullCommand():
 		commandMode()
 	case p75.FullCommand():
-		commandP75()
+		commandPerc(75)
 	case perc.FullCommand():
 		commandPerc(*percentile)
 	}
-}
-
-func commandMax() {
-	floats, err := readNumbers()
-	if err != nil {
-		panic(err)
-	}
-
-	max, err := stats.Max(floats)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println(max)
-}
-
-func commandMean() {
-	floats, err := readNumbers()
-	if err != nil {
-		panic(err)
-	}
-
-	mean, err := stats.Mean(floats)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println(mean)
-}
-
-func commandMedian() {
-	floats, err := readNumbers()
-	if err != nil {
-		panic(err)
-	}
-
-	mean, err := stats.Median(floats)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println(mean)
-}
-
-func commandMin() {
-	floats, err := readNumbers()
-	if err != nil {
-		panic(err)
-	}
-
-	min, err := stats.Min(floats)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Println(min)
 }
 
 func commandMode() {
@@ -139,10 +83,6 @@ func commandPerc(percentile float64) {
 	fmt.Println(standing)
 }
 
-func commandP75() {
-	commandPerc(75)
-}
-
 func readNumbers() ([]float64, error) {
 	scanner := bufio.NewScanner(os.Stdin)
 	values := make([]float64, 0)
@@ -157,4 +97,18 @@ func readNumbers() ([]float64, error) {
 	}
 
 	return values, nil
+}
+
+func simpleStatCommand(fn func(stats.Float64Data) (float64, error)) {
+	floats, err := readNumbers()
+	if err != nil {
+		panic(err)
+	}
+
+	result, err := fn(floats)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println(result)
 }
