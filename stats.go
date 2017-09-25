@@ -3,10 +3,11 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"github.com/montanaflynn/stats"
-	"gopkg.in/alecthomas/kingpin.v2"
 	"os"
 	"strconv"
+
+	"github.com/montanaflynn/stats"
+	"gopkg.in/alecthomas/kingpin.v2"
 )
 
 var (
