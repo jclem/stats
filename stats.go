@@ -91,7 +91,7 @@ func readNumbers() ([]float64, error) {
 		text := scanner.Text()
 		float, err := strconv.ParseFloat(text, 64)
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("Could not parse \"%s\" as a number", text)
 		}
 		values = append(values, float)
 	}
